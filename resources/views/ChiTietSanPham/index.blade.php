@@ -13,9 +13,13 @@
             <div id="main-slider" class="splide">
                 <div class="splide__track">
                 <ul class="splide__list">
-                    <li class="splide__slide"><img src="/asset/img/sp1.png" alt="Ảnh chính 1" /></li>
-                    <li class="splide__slide"><img src="/asset/img/sp1_1.png" alt="Ảnh chính 2" /></li>
-                    <li class="splide__slide"><img src="/asset/img/sp1_2.png" alt="Ảnh chính 3" /></li>
+                    @foreach($thuoc->HinhAnh as $hinh)
+                        <li class="splide__slide">
+                            <img src="{{ asset('asset/img/' . $hinh) }}" 
+                                alt="{{ $thuoc->tenThuoc }} - ảnh {{ $loop->iteration }}" 
+                                loading="lazy">
+                        </li>
+                    @endforeach
                 </ul>
                 </div>
             </div>
@@ -24,26 +28,34 @@
             <div id="thumbnail-slider" class="splide related-products">
                 <div class="splide__track">
                 <ul class="splide__list">
-                    <li class="splide__slide"><img src="/asset/img/sp1.png" alt="Thumb 1" /></li>
-                    <li class="splide__slide"><img src="/asset/img/sp1_1.png" alt="Thumb 2" /></li>
-                    <li class="splide__slide"><img src="/asset/img/sp1_2.png" alt="Thumb 3" /></li>
+                    @foreach($thuoc->HinhAnh as $hinh)
+                        <li class="splide__slide"><img src="{{ asset('asset/img/' . $hinh) }}" alt="Thumb 1" /></li>
+                    @endforeach
                 </ul>
                 </div>
             </div>
   
         </div>
         <div class="product-details">
-            <h1 class="product-title">Chi Nha Khoa Oral-B Hỗ Trợ Làm Sạch Mảng Bám Trong Kẽ Răng (cuộn 50m)</h1>
-            <p class="product-code">P00988 • Thương hiệu: Oral-B</p>
+            <h1 class="product-title">{{ $thuoc->tenThuoc }}</h1>
+            <p class="product-code">{{ $thuoc->maThuoc }} • Thương hiệu: Oral-B</p>
             <div class="badges">
                 <span class="badge official">CHÍNH HÃNG</span>
                 <span class="badge freeship">FREESHIP</span>
             </div>
-            <div class="price">
-                <span class="discount">-20%</span>
-                <span class="old-price">65.000 đ</span>
-                <span class="current-price">52.000 đ/Hộp</span>
-            </div>
+            @if ($thuoc->giaKhuyenMai)
+                <div class="price">
+                    <span class="discount">
+                        -{{ round( (1 - $thuoc->giaKhuyenMai / $thuoc->GiaTien) * 100 ) }}%
+                    </span>
+                    <span class="old-price">{{formatPrice($thuoc->GiaTien)}}</span>
+                    <span class="current-price">{{formatPrice($thuoc->giaKhuyenMai)}}/ {{$thuoc->DVTinh}}</span>
+                </div>
+            @else
+              <div class="price">
+                    <span class="current-price">{{formatPrice( $thuoc->GiaTien)}}/ {{$thuoc->DVTinh}}</span>
+                </div>
+            @endif
             <p class="price-note">Giá đã bao gồm thuế, phí vận chuyển và các chi phí khác (nếu có) sẽ được thể hiện khi đặt hàng.</p>
             <div class="rating">
                 <span class="rating-value">62.2k</span>
@@ -52,25 +64,25 @@
             <div class="product-variations-section">
                 <p>Phân loại sản phẩm</p>
                 <div class="product-variations">
-                    <button class="variation-button active">Cái</button>
+                    <button class="variation-button active">{{$thuoc->DVTinh}}</button>
                 </div>
             </div>
             <div id='product-description'>
                 <div class="product-description-containner">
                     <p class="product-description-name">Tên sản phẩm :</p>
-                    <p class="product-description-value">Chỉ nha khoa ORAL-B</p>
+                    <p class="product-description-value">{{$thuoc->tenThuoc}}</p>
                 </div>
                 <div class="product-description-containner">
                     <p class="product-description-name">Danh mục :</p>
-                    <p class="product-description-value">Tăm chỉ nha khoa</p>
+                    <p class="product-description-value">{{$thuoc->tenLoai}}</p>
                 </div>
                 <div class="product-description-containner">
                     <p class="product-description-name">Quy cách :</p>
-                    <p class="product-description-value">50m/hộp</p>
+                    <p class="product-description-value">{{$thuoc->QuiCach}}</p>
                 </div>
                 <div class="product-description-containner">
                     <p class="product-description-name">Công dụng :</p>
-                    <p class="product-description-value">Làm sạch mảng bám thức ăn dư thừa trong kẽ răng.</p>
+                    <p class="product-description-value">{{$thuoc->CongDung}}</p>
                 </div>
                 <div class="product-description-containner">
                     <p class="product-description-name">Tên nhà sản xuất:</p>
@@ -82,15 +94,11 @@
                 <h2>Mô tả sản phẩm</h2>
                 <div class="product-details">
                     <p class="product-details-name">Thành phần:</p>
-                    <p class="product-details-value">Nylon, Pebax, Microcrystaline Wax, Mint Flavor, hương bạc hà.</p>
-                </div>
-                <div class="product-details">
-                    <p class="product-details-name">Công dụng:</p>
-                    <p class="product-details-value">Làm sạch mảng bám thức ăn dư thừa trong kẽ răng.</p>
+                    <p class="product-details-value">{{$thuoc->ThanhPhan}}</p>
                 </div>
                 <div class="product-details">
                     <p class="product-details-name">Cách sử dụng:</p>
-                    <p class="product-details-value">Lấy một đoạn chỉ dài khoảng 30 - 40cm, cuộn 2 đầu chỉ vào ngón tay rồi căng ra, kéo nhẹ nhàng để chỉ lọt vào kẽ răng, rồi đẩy lên xuống vài lần.</p>
+                    <p class="product-details-value">{{$thuoc->CachSuDung}}</p>
                 </div>
             </div>
         </div>

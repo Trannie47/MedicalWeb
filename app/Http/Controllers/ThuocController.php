@@ -10,10 +10,14 @@ class ThuocController extends Controller
 {
     public function show($id)
     {
-        $thuoc = Thuoc::find($id);
+       $thuoc = Thuoc::join('Loaithuoc', 'thuoc.maLoai', '=', 'Loaithuoc.maLoai')
+              ->select('thuoc.*', 'Loaithuoc.tenLoai') // lấy thêm tên loại
+              ->where('thuoc.isDelete', false)
+              ->where('thuoc.maThuoc', $id)
+              ->firstOrFail();
 
         if (!$thuoc) {
-            abort(404, 'thuốc không tồn tại');
+            abort(404, 'Thuốc không tồn tại');
         }
 
         return view('ChiTietSanPham.index', compact('thuoc'));

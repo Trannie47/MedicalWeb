@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThuocController;
-
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('trangchu.index'); 
@@ -24,10 +24,6 @@ Route::get('/dangnhap', function () {
     return view('DangNhap.index');  
 });
 
-Route::get('/dangki', function () {
-    return view('DangKi.index');  
-});
-
 Route::get('/giohang', function () {
     return view('GioHang.index');  
 });
@@ -36,6 +32,9 @@ Route::get('/thuoc/{id}', [ThuocController::class, 'show']);
 
 Route::get('/loaithuoc/{id}', [ThuocController::class, 'getByLoai']);
 
+Route::get('/dangki', [AuthController::class, 'showRegister'])->name('register.show');
+
+Route::post('/dangki', [AuthController::class, 'register'])->name('register.submit');
 
 //-----------------------------------------------------------------------------------------------------
 //css

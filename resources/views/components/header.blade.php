@@ -15,11 +15,18 @@
         </div>
         <div class="user-bar">
             <a id="cart-toggle"><i class="fa-solid fa-cart-shopping"></i></a>
-
-            <a id="user-card" href="{{ url('/dangnhap') }}">
-                <i class="fa-solid fa-circle-user"></i>
-                <p>Đăng nhập/ Đăng ký</p>
-            </a>
+            @if(Auth::guard('khachhang')->check())
+                {{-- Đã đăng nhập --}}
+                <a id="user-card" >
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Xin chào, {{ Auth::guard('khachhang')->user()->ten }} </p>
+                </div>
+            @else
+                <a id="user-card" href="{{ url('/dangnhap') }}">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Đăng nhập/ Đăng ký</p>
+                </a>
+            @endif
         </div>
     </div>
 

@@ -14,8 +14,8 @@
         <form class="login-form">
             <div class="input-wrapper">
                 <div class="input-container">
-                    <label class="label-container" for="email">Email</label>
-                    <input type="email" id="email" placeholder="Email" required>
+                    <label class="label-container" for="sdt">Số điện thoại</label>
+                    <input type="" id="email" placeholder="Số điện thoại" required>
                 </div>
                 <div class="input-container">
                     <label class="label-container" for="password">Mật khẩu</label>

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Khachhang
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Khachhang extends Model
+class Khachhang extends Authenticatable
 {
 	protected $table = 'khachhang';
 	protected $primaryKey = 'sdt';
@@ -32,6 +33,7 @@ class Khachhang extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
+		'sdt',
 		'ten',
 		'email',
 		'namsinh',
@@ -44,4 +46,10 @@ class Khachhang extends Model
 	{
 		return $this->hasMany(Donhang::class, 'SdtNguoiDat');
 	}
+
+	// Laravel mặc định dùng 'password', nên thêm accessor
+    public function getAuthPassword()
+    {
+        return $this->matKhau;
+    }
 }
