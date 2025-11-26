@@ -20,10 +20,6 @@ Route::get('/gioithieu', function () {
     return view('GioiThieu.index');  
 });
 
-Route::get('/dangnhap', function () {
-    return view('DangNhap.index');  
-});
-
 Route::get('/giohang', function () {
     return view('GioHang.index');  
 });
@@ -35,6 +31,12 @@ Route::get('/loaithuoc/{id}', [ThuocController::class, 'getByLoai']);
 Route::get('/dangki', [AuthController::class, 'showRegister'])->name('register.show');
 
 Route::post('/dangki', [AuthController::class, 'register'])->name('register.submit');
+
+Route::get('/dangnhap', [AuthController::class, 'showLogin']);
+
+Route::post('/dangnhap', [AuthController::class, 'login'])->name('login.submit');
+
+Route::post('/dangxuat', [AuthController::class, 'logout'])->name('logout');
 
 //-----------------------------------------------------------------------------------------------------
 //css

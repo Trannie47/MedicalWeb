@@ -10,23 +10,35 @@
 @section('content')
 
     <div class="login-container">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $err)
+                    <p>{{ $err }}</p>
+                @endforeach
+            </div>
+        @endif
         <h2>ĐĂNG NHẬP</h2>
-        <form class="login-form">
+        <form class="login-form" method="POST" action="{{ route('login.submit') }}">
+            @csrf
             <div class="input-wrapper">
                 <div class="input-container">
-                    <label class="label-container" for="sdt">Số điện thoại</label>
-                    <input type="" id="email" placeholder="Số điện thoại" required>
+                    <label class="label-container" for="phone">Số điện thoại</label>
+                    <input type="text" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Số điện thoại" required>
                 </div>
                 <div class="input-container">
                     <label class="label-container" for="password">Mật khẩu</label>
-                    <input type="password" id="password" placeholder="Mật khẩu" required>
+                    <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
                 </div>
             </div>
             
 
             <a href="#" class="forgot-password">Quên mật khẩu?</a>
 
-            <button type="submit" class="login-btn" onclick="alert('Đăng nhập thành công!')">Đăng nhập</button>
+            <button type="submit" class="login-btn" >Đăng nhập</button>
 
             <p class="register-link">Chưa có tài khoản? <a href="{{url('/dangki')}}">Đăng kí</a></p>
         </form>

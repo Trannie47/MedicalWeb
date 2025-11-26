@@ -16,13 +16,12 @@
         <div class="user-bar">
             <a id="cart-toggle"><i class="fa-solid fa-cart-shopping"></i></a>
             @if(Auth::guard('khachhang')->check())
-                {{-- Đã đăng nhập --}}
-                <a id="user-card" >
+                <a class="user-card" id="user-login" >
                     <i class="fa-solid fa-circle-user"></i>
                     <p>Xin chào, {{ Auth::guard('khachhang')->user()->ten }} </p>
-                </div>
+                </a>
             @else
-                <a id="user-card" href="{{ url('/dangnhap') }}">
+                <a class="user-card" href="{{ url('/dangnhap') }}">
                     <i class="fa-solid fa-circle-user"></i>
                     <p>Đăng nhập/ Đăng ký</p>
                 </a>
@@ -109,5 +108,21 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="cart-wrapper">
+        @if(Auth::guard('khachhang')->check())
+            <div id="user-model" class="user-model">
+                <ul>
+                    <li><a href="#">Đổi thông tin cá nhân</a></li>
+                    <li><a href="#">Đổi mật khẩu</a></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}"  >
+                            @csrf
+                            <button type="submit" style="background:none;border:none;padding:0;color:red;cursor:pointer;">Đăng xuất</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        @endif
     </div>
 </header>

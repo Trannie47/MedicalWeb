@@ -17,10 +17,14 @@ function initHeaderFeatures() {
         const cartIcon = document.querySelector(".fa-cart-shopping");
         const cartModal = document.getElementById("cart-modal");
 
+        const userLogin = document.getElementById("user-login");
+        const userModel = document.getElementById("user-model");
+
         function closeAll() {
             navMenu?.classList.remove("active");
             dropdownMenu?.classList.remove("show");
             cartModal?.classList.remove("show");
+            userModel?.classList.remove("show");
         }
 
         // Menu chính
@@ -54,6 +58,16 @@ function initHeaderFeatures() {
                 if (!isShow) cartModal.classList.add("show");
             });
             cartModal.addEventListener("click", e => e.stopPropagation());
+        }
+
+        if (userLogin && userModel) {
+            userLogin.addEventListener("click", function (e) {
+                e.stopPropagation();
+                const isShow = userModel.classList.contains("show");
+                closeAll();
+                if (!isShow) userModel.classList.add("show");
+            });
+            userModel.addEventListener("click", e => e.stopPropagation());
         }
 
         // Click ngoài đóng hết

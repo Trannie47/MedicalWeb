@@ -44,5 +44,48 @@ class AuthController extends Controller
         // Redirect đến dashboard
         return redirect('/trangchu')->with('success', 'Đăng ký thành công, bạn đã được đăng nhập!');
     }
+
+    public function showLogin()
+    {
+        return view('DangNhap.index');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'phone' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Tìm khách hàng theo số điện thoại
+        $khachhang = Khachhang::where('sdt', $credentials['phone'])->first();
+
+        if ($khachhang && Hash::check($credentials['password'], $khachhang->matKhau)) {
+            Auth::guard('khachhang')->login($khachhang);
+            $request->session()->regenerate();
+
+            return redirect('/trangchu')->with('success', 'Đăng nhập thành công!');
+        }
+
+        return back()->withErrors([
+            'phone' => 'Số điện thoại hoặc mật khẩu không đúng',
+        ])->onlyInput('phone');
+    }
+
+
+    public function logout(Request $request)
+    {
+        // Logout guard 'khachhang'
+        Auth::guard('khachhang')->logout();
+
+        // Xóa session để tránh lỗi 419
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Chuyển hướng về trang login hoặc trang chủ
+        return redirect('/dangnhap')->with('success', 'Bạn đã đăng xuất thành công!');
+    }
+
+
 }
 

@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $ten
  * @property string|null $email
  * @property string $namsinh
- * @property string $GhiChu
+ * @property string|null $GhiChu
  * @property string $diaChi
  * @property string $matKhau
  * 
@@ -42,14 +42,18 @@ class Khachhang extends Authenticatable
 		'matKhau'
 	];
 
-	public function donhangs()
-	{
-		return $this->hasMany(Donhang::class, 'SdtNguoiDat');
-	}
+	protected $hidden = [
+        'matKhau',
+    ];
 
-	// Laravel mặc định dùng 'password', nên thêm accessor
+    // Laravel mặc định dùng 'password'
     public function getAuthPassword()
     {
         return $this->matKhau;
     }
+
+	public function donhangs()
+	{
+		return $this->hasMany(Donhang::class, 'SdtNguoiDat');
+	}
 }

@@ -95,14 +95,14 @@ header {
     color: black;
 }
 
-#user-card {
+.user-card {
     background: white;
     color: black;
     padding: 5px 10px;
     border-radius: 20px;
 }
 
-#user-card i {
+.user-card i {
     background: black;
     color: white;
     border-radius: 50%;
@@ -110,8 +110,9 @@ header {
     margin-right: 8px;
 }
 
-#user-card p {
+.user-card p {
     margin: 0;
+    color: black;
     font-weight: bold;
 }
 
