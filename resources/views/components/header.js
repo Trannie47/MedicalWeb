@@ -94,19 +94,19 @@ function removeItem(itemId) {
 }
 
 function updateTotalPrice() {
-    let total = 0;
-    const cartItems = document.querySelectorAll(".cart-items li");
+    // let total = 0;
+    // const cartItems = document.querySelectorAll(".cart-items li");
 
-    cartItems.forEach(item => {
-        const priceText = item.querySelector(".storage-price")?.innerText || "0";
-        const price = parseInt(priceText.replace(/\D/g, '')) || 0;
-        total += price;
-    });
+    // cartItems.forEach(item => {
+    //     const priceText = item.querySelector(".storage-price")?.innerText || "0";
+    //     const price = parseInt(priceText.replace(/\D/g, '')) || 0;
+    //     total += price;
+    // });
 
-    const totalPriceElement = document.querySelector(".cart-footer p");
-    if (totalPriceElement) {
-        totalPriceElement.innerHTML = `<strong>Tổng:</strong> ${total.toLocaleString()} đ`;
-    }
+    // const totalPriceElement = document.querySelector(".cart-footer p");
+    // if (totalPriceElement) {
+    //     totalPriceElement.innerHTML = `<strong>Tổng:</strong> ${total.toLocaleString()} đ`;
+    // }
 }
 
 function initTypingEffect(inputSelector, placeholders) {

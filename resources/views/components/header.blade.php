@@ -60,48 +60,30 @@
     <div class="cart-wrapper">
         <div id="cart-modal" class="cart-modal">
             <ul class="cart-items">
-                <li id="sp-1">
-                    <img src="{{ asset('asset/img/spm1.png') }}" alt="">
-                    <div class="item-info">
-                        <p>Cao dán Salonpas Hisamitsu</p>
-                        <div class="item-info-price">
-                            <small>1</small>
-                            <small>x</small>
-                            <small class="storage-price">12.000</small>
-                            <small>đ</small>
+                @forelse ($cart as $id => $item)
+                    <li id="sp-{{ $id }}">
+                        <img src="{{ asset('asset/img/' . $item['hinhAnh']) }}" alt="{{ $item['tenThuoc'] }}">
+                        <div class="item-info">
+                            <p>{{ $item['tenThuoc'] }}</p>
+                            <div class="item-info-price">
+                                <small>{{ $item['soLuong'] }}</small>
+                                <small>x</small>
+                                <small class="storage-price">{{ number_format($item['gia']) }}</small>
+                                <small>đ</small>
+                            </div>
                         </div>
-                    </div>
-                    <button class="remove">×</button>
-                </li>
-                <li id="sp-2">
-                    <img src="{{ asset('asset/img/sp2.png') }}" alt="">
-                    <div class="item-info">
-                        <p>Postinor</p>
-                        <div class="item-info-price">
-                            <small>1</small>
-                            <small>x</small>
-                            <small class="storage-price">35.000</small>
-                            <small>đ</small>
-                        </div>
-                    </div>
-                    <button class="remove">×</button>
-                </li>
-                <li id="sp-3">
-                    <img src="{{ asset('asset/img/sp3.png') }}" alt="">
-                    <div class="item-info">
-                        <p>Smecta</p>
-                        <div class="item-info-price">
-                            <small>1</small>
-                            <small>x</small>
-                            <small class="storage-price">140.000</small>
-                            <small>đ</small>
-                        </div>
-                    </div>
-                    <button class="remove">×</button>
-                </li>
+                        <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline">
+                            @csrf
+                            <button class="remove" type="submit">×</button>
+                        </form>
+                    </li>
+                @empty
+                    <li>Giỏ hàng trống.</li>
+                @endforelse
+                
             </ul>
             <div class="cart-footer">
-                <p><strong>Tổng:</strong> 187.000 đ</p>
+                <p><strong>Tổng:</strong>{{ formatPrice(array_sum(array_map(fn($item) => $item['gia'] * $item['soLuong'], $cart))) }} </p>
                 <div class="cart-actions">
                     <a href="{{ url('/giohang') }}" class="btn">Xem Giỏ Hàng</a>
                     <a href="{{ url('/giohang') }}" class="btn">Thanh Toán</a>

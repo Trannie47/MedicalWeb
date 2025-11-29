@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThuocController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GioHangController;
 
 Route::get('/', function () {
     return view('trangchu.index'); 
@@ -26,6 +27,12 @@ Route::get('/giohang', function () {
 
 Route::get('/thuoc/{id}', [ThuocController::class, 'show']);
 
+Route::post('/cart/add/{id}', [GioHangController::class, 'addToCart'])->name('cart.add');
+
+Route::post('/cart/update/{id}', [GioHangController::class, 'updateCart'])->name('cart.update');
+
+Route::post('/cart/remove/{id}', [GioHangController::class, 'removeFromCart'])->name('cart.remove');
+
 Route::get('/loaithuoc/{id}', [ThuocController::class, 'getByLoai']);
 
 Route::get('/dangki', [AuthController::class, 'showRegister'])->name('register.show');
@@ -37,6 +44,8 @@ Route::get('/dangnhap', [AuthController::class, 'showLogin']);
 Route::post('/dangnhap', [AuthController::class, 'login'])->name('login.submit');
 
 Route::post('/dangxuat', [AuthController::class, 'logout'])->name('logout');
+
+
 
 //-----------------------------------------------------------------------------------------------------
 //css

@@ -27,31 +27,49 @@
 
                 <div class="cart__body">
                     <!-- Cart Item 1 -->
-                    <div class="cart__row" data-price="12000">
+                    @foreach($cart as $id => $item)
+                    <div class="cart__row" data-price="{{ $item['gia'] }}">
+                        <!-- Sản phẩm -->
                         <div class="cart__col cart__product">
                             <div class="cart__item">
-                                <img src="/asset/img/spm1.png" alt="" width="100px">
-                                <div class="cart__name">Cao dán Salonpas Hisamitsu</div>
+                                <img src="/asset/img/{{ $item['hinhAnh'] }}" alt="{{ $item['tenThuoc'] }}" width="100px">
+                                <div class="cart__name">{{ $item['tenThuoc'] }}</div>
                             </div>
                         </div>
-                        <div class="cart__col cart__price">12.000 đ</div>
-                        <div class="cart__col cart__quantity">
+
+                        <!-- Giá 1 sản phẩm -->
+                        <div class="cart__col cart__price">{{ number_format($item['gia'], 0, ',', '.') }} đ</div>
+
+                        <!-- Số lượng -->
+                        
+                        <form class="cart__col cart__quantity" action="{{ route('cart.update', $id) }}" method="POST">
+                            @csrf
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <div class="dec">-</div>
-                                    <div class="quantity-input">1</div>
-                                    <div class="inc">+</div>
+                                    <button type="submit" class="dec" name="action" value="dec">-</button>
+                                    <input type="number" name="quantity" value="{{ $item['soLuong'] }}" min="1" class="quantity-input" onchange="this.form.submit()">
+                                    <button type="submit" class="inc" name="action" value="inc">+</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cart__col cart__total">12.000 đ</div>
+                        </form>
+                        
+
+                        <!-- Tổng tiền -->
+                        <div class="cart__col cart__total">{{ formatPrice( $item['gia'] * $item['soLuong'] ) }}</div>
+
+                        <!-- Xóa sản phẩm -->
                         <div class="cart__col cart__remove">
-                            <div class="icon_close"></div>
+                            <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline">
+                                @csrf
+                                <button class="icon_close remove-btn" type="submit"></button>
+                            </form>
                         </div>
                     </div>
+                    @endforeach
+
 
                     <!-- Cart Item 2 -->
-                    <div class="cart__row" data-price="35000">
+                    <!-- <div class="cart__row" data-price="35000">
                         <div class="cart__col cart__product">
                             <div class="cart__item">
                                 <img src="/asset/img/sp1.png" alt="" width="100px">
@@ -72,31 +90,9 @@
                         <div class="cart__col cart__remove">
                             <div class="icon_close"></div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <!-- Cart Item 3 -->
-                    <div class="cart__row" data-price="140000">
-                        <div class="cart__col cart__product">
-                            <div class="cart__item">
-                                <img src="/asset/img/sp3.png" alt="" width="100px">
-                                <div class="cart__name">Smecta</div>
-                            </div>
-                        </div>
-                        <div class="cart__col cart__price">140.000 đ</div>
-                        <div class="cart__col cart__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <div class="dec">-</div>
-                                    <div class="quantity-input">1</div>
-                                    <div class="inc">+</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart__col cart__total">140.000 đ</div>
-                        <div class="cart__col cart__remove">
-                            <div class="icon_close"></div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
 
@@ -106,7 +102,7 @@
                 <h2>Thông tin đơn hàng</h2>
                 <div class="total">
                     <span>Tổng tiền:</span>
-                    <strong>3,870,000 ₫</strong>
+                    <strong>{{ formatPrice(array_sum(array_map(fn($item) => $item['gia'] * $item['soLuong'], $cart))) }}</strong>
                 </div>
                 <button class="checkout-btn">Thanh toán</button>
             </div>

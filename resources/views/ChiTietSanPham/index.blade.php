@@ -102,18 +102,19 @@
                 </div>
             </div>
         </div>
-        <div class="order-section">
+        <form class="order-section" method="POST" action="{{ route('cart.add', $thuoc->maThuoc) }}">
+            @csrf
             <div class="quantity-selector">
                 <span>Số lượng</span>
                 <div class="quantity-input">
-                    <button class="quantity-button minus">-</button>
-                    <input type="number" value="1" min="1" class="quantity-number">
-                    <button class="quantity-button plus">+</button>
+                    <div class="quantity-button minus">-</div>
+                    <input type="number" value="1" min="1" name = "quantity" class="quantity-number">
+                    <div class="quantity-button plus">+</div>
                 </div>
             </div>
             <div class="buyer-container">
-                <button class="buy-now-button">Mua ngay</button>
-                <button class="add-to-cart-button">Thêm vào giỏ</button>
+                <button class="buy-now-button" type="submit">Mua ngay</button>
+                <button class="add-to-cart-button" type="submit">Thêm vào giỏ</button>
             </div>
             <div class="delivery-options">
                 <div class="delivery-item">
@@ -130,7 +131,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
  <!-- Chatbox -->
     <button id="open_chatbox" title="Mở chat"><i class="fa-regular fa-message"></i></button>
     <div id="chatbox" style="display:none;">

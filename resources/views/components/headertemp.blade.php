@@ -11,16 +11,21 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="menu-icon">Menu</div>
+            <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
         </div>
         <div class="user-bar">
-            <a href="#" id="cart-toggle"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a id="user-card" 
-               href="{{ route('dang-nhap') }}"
-            >
-                <i class="fa-solid fa-circle-user"></i>
-                <p>Đăng nhập/ Đăng ký</p>
-            </a>
+            <a id="cart-toggle"><i class="fa-solid fa-cart-shopping"></i></a>
+            @if(Auth::guard('khachhang')->check())
+                <a class="user-card" id="user-login" >
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Xin chào, {{ Auth::guard('khachhang')->user()->ten }} </p>
+                </a>
+            @else
+                <a class="user-card" href="{{ url('/dangnhap') }}">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Đăng nhập/ Đăng ký</p>
+                </a>
+            @endif
         </div>
     </div>
 
@@ -31,16 +36,23 @@
                     <i class="fa fa-bars"></i> Danh mục sản phẩm <i class="fa fa-chevron-down"></i>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ route('loai-thuoc') }}">Thuốc kê đơn</a></li>
-                    <li><a href="{{ route('loai-thuoc-khong-ke-don') }}">Thuốc không kê đơn</a></li>
+                    <!-- <li><a href="#">Thuốc kê đơn</a></li>
+                    <li><a href="#">Thuốc không kê đơn</a></li> -->
+                    @foreach ($loaithuocs as $loaithuoc)
+                        <li>
+                            <a href="{{ url('/loaithuoc/' . $loaithuoc->maLoai) }}">
+                                {{ $loaithuoc->TenLoai }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <ul class="menu-bar">
-                <li><a href="{{ route('trang-chu') }}"> <i class="fa-solid fa-home"></i> Trang chủ</a></li>
-                <li><a href="{{ route('tin-tuc') }}">Tin tức</a></li>
-                <li><a href="{{ route('lien-he') }}">Liên lạc</a></li>
-                <li><a href="{{ route('gioi-thieu') }}">Giới thiệu</a></li>
-                <li><a href="{{ route('lab-thuc-hanh') }}">Lab Thực Hành</a></li>
+                <li><a href="{{ url('/trangchu') }}"><i class="fa-solid fa-home"></i> Trang chủ</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="{{ url('/lienhe') }}">Liên lạc</a></li>
+                <li><a href="{{ url('/gioithieu') }}">Giới thiệu</a></li>
+                <li><a href="#">Lab Thực Hành</a></li>
             </ul>
         </div>
     </nav>
@@ -91,10 +103,26 @@
             <div class="cart-footer">
                 <p><strong>Tổng:</strong> 187.000 đ</p>
                 <div class="cart-actions">
-                    <a href="{{ route('gio-hang') }}" class="btn">Xem Giỏ Hàng</a>
-                    <a href="#" class="btn">Thanh Toán</a>
+                    <a href="{{ url('/giohang') }}" class="btn">Xem Giỏ Hàng</a>
+                    <a href="{{ url('/giohang') }}" class="btn">Thanh Toán</a>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="cart-wrapper">
+        @if(Auth::guard('khachhang')->check())
+            <div id="user-model" class="user-model">
+                <ul>
+                    <li><a href="#">Đổi thông tin cá nhân</a></li>
+                    <li><a href="#">Đổi mật khẩu</a></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}"  >
+                            @csrf
+                            <button type="submit" style="background:none;border:none;padding:0;color:red;cursor:pointer;">Đăng xuất</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        @endif
     </div>
 </header>

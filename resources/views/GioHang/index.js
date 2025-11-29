@@ -19,42 +19,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  document.querySelectorAll('.cart__row').forEach(row => {
-    const decBtn = row.querySelector('.dec');
-    const incBtn = row.querySelector('.inc');
-    const qtyEl = row.querySelector('.quantity-input');
-    const totalEl = row.querySelector('.cart__total');
-    const price = parseInt(row.getAttribute('data-price'));
+  // document.querySelectorAll('.cart__row').forEach(row => {
+  //   const decBtn = row.querySelector('.dec');
+  //   const incBtn = row.querySelector('.inc');
+  //   const qtyEl = row.querySelector('.quantity-input');
+  //   const totalEl = row.querySelector('.cart__total');
+  //   const price = parseInt(row.getAttribute('data-price'));
 
-    decBtn.addEventListener('click', () => {
-      let qty = parseInt(qtyEl.textContent);
-      if (qty > 1) {
-        qty--;
-        qtyEl.textContent = qty;
-        totalEl.textContent = formatCurrency(qty * price);
-        updateTotal();
-      }
-    });
+  //   decBtn.addEventListener('click', () => {
+  //     let qty = parseInt(qtyEl.textContent);
+  //     if (qty > 1) {
+  //       qty--;
+  //       qtyEl.textContent = qty;
+  //       totalEl.textContent = formatCurrency(qty * price);
+  //       updateTotal();
+  //     }
+  //   });
 
-    incBtn.addEventListener('click', () => {
-      let qty = parseInt(qtyEl.textContent);
-      qty++;
-      qtyEl.textContent = qty;
-      totalEl.textContent = formatCurrency(qty * price);
-      updateTotal();
-    });
-  });
+  //   incBtn.addEventListener('click', () => {
+  //     let qty = parseInt(qtyEl.textContent);
+  //     qty++;
+  //     qtyEl.textContent = qty;
+  //     totalEl.textContent = formatCurrency(qty * price);
+  //     updateTotal();
+  //   });
+  // });
 
-  document.querySelectorAll('.icon_close').forEach(closeBtn => {
-    closeBtn.addEventListener('click', () => {
-      const row = closeBtn.closest('.cart__row');
-      if (row) {
-        row.style.display = 'none';
-        updateTotal();
-      }
-    });
-  });
+  // document.querySelectorAll('.icon_close').forEach(closeBtn => {
+  //   closeBtn.addEventListener('click', () => {
+  //     const row = closeBtn.closest('.cart__row');
+  //     if (row) {
+  //       row.style.display = 'none';
+  //       updateTotal();
+  //     }
+  //   });
+  // });
 
   // Tính tổng ban đầu khi load trang
-  updateTotal();
+  // updateTotal();
 });
