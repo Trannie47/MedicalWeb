@@ -63,8 +63,12 @@ class AuthController extends Controller
         if ($khachhang && Hash::check($credentials['password'], $khachhang->matKhau)) {
             Auth::guard('khachhang')->login($khachhang);
             $request->session()->regenerate();
-
-            return redirect('/trangchu')->with('success', 'Đăng nhập thành công!');
+            if ($khachhang->isAdmin ===0) {
+                return redirect('/trangchu')->with('success', 'Đăng nhập thành công!');
+            } 
+            if ($khachhang->isAdmin ===0) {
+                return redirect('/admin')->with('success', 'Đăng nhập thành công!');
+            } 
         }
 
         return back()->withErrors([

@@ -20,6 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string|null $GhiChu
  * @property string $diaChi
  * @property string $matKhau
+ * @property bool $isAdmin
  * 
  * @property Collection|Donhang[] $donhangs
  *
@@ -32,17 +33,20 @@ class Khachhang extends Authenticatable
 	public $incrementing = false;
 	public $timestamps = false;
 
+	protected $casts = [
+		'isAdmin' => 'bool'
+	];
+
 	protected $fillable = [
-		'sdt',
 		'ten',
 		'email',
 		'namsinh',
 		'GhiChu',
 		'diaChi',
-		'matKhau'
+		'matKhau',
+		'isAdmin'
 	];
-
-	protected $hidden = [
+    protected $hidden = [
         'matKhau',
     ];
 
