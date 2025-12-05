@@ -21,7 +21,7 @@ class Footer extends Component
         if(file_exists($fullPath)) {
             $css = file_get_contents($fullPath);
             $cssTag = "<style>{$css}</style>";
-            view()->share('footer_styles', (view()->shared('footer_styles') ?? '') . $cssTag);
+            view()->share('footer_styles', (view()-> shared('footer_styles') ?? '') . $cssTag);
         }
     }
 
