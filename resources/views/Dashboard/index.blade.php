@@ -154,18 +154,6 @@
                                     <td><span class="text-danger">5 hộp</span></td>
                                     <td>12/2025</td>
                                 </tr>
-                                <tr>
-                                    <td>Amoxicillin 250mg</td>
-                                    <td>Kháng sinh</td>
-                                    <td><span class="text-danger">3 hộp</span></td>
-                                    <td>08/2025</td>
-                                </tr>
-                                <tr>
-                                    <td>Vitamin C</td>
-                                    <td>Vitamin</td>
-                                    <td><span class="text-danger">7 hộp</span></td>
-                                    <td>05/2026</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
