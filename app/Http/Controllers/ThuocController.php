@@ -35,4 +35,15 @@ class ThuocController extends Controller
 
         return view('LoaiThuoc.index', compact('thuocs'));
     }
+
+    public function getTrangChu()
+    {
+        $thuocskhuyenmai = Thuoc::where('isDelete', false)
+                ->whereNotNull('giaKhuyenMai')
+                ->get();
+        $Thu
+        
+
+        return view('LoaiThuoc.index', compact('thuocKhuyenmai'));
+    }
 }

@@ -54,7 +54,7 @@ Route::get('/dashboard', function () {
 //-----------------------------------------------------------------------------------------------------
 //css
 Route::get('/css/{file}', function ($file) {
-    $path = resource_path('views/' . $file . '/index.css');
+    $path = resource_path('css/' . $file . '/index.css');
 
     if (!file_exists($path)) {
         abort(404);
@@ -67,7 +67,7 @@ Route::get('/css/{file}', function ($file) {
 });
 //js
 Route::get('/js/{file}', function ($file) {
-    $path = resource_path('views/' . $file . '/index.js');
+    $path = resource_path('js/' . $file . '/index.js');
 
     if (!file_exists($path)) {
         abort(404);

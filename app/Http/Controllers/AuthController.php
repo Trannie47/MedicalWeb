@@ -56,19 +56,18 @@ class AuthController extends Controller
             'phone' => 'required|string',
             'password' => 'required|string',
         ]);
-
         // Tìm khách hàng theo số điện thoại
         $khachhang = Khachhang::where('sdt', $credentials['phone'])->first();
-
         if ($khachhang && Hash::check($credentials['password'], $khachhang->matKhau)) {
             Auth::guard('khachhang')->login($khachhang);
             $request->session()->regenerate();
-            if ($khachhang->isAdmin ===0) {
+            if ($khachhang->isAdmin == 0) {
                 return redirect('/trangchu')->with('success', 'Đăng nhập thành công!');
             } 
-            if ($khachhang->isAdmin ===0) {
-                return redirect('/admin')->with('success', 'Đăng nhập thành công!');
+            else if ($khachhang->isAdmin == 1) {
+                return redirect('/trangchu')->with('success', 'Đăng nhập thành công!');
             } 
+            
         }
 
         return back()->withErrors([
