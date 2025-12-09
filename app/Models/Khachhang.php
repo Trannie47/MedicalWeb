@@ -38,6 +38,7 @@ class Khachhang extends Authenticatable
 	];
 
 	protected $fillable = [
+		'sdt',
 		'ten',
 		'email',
 		'namsinh',

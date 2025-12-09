@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 
 Route::get('/', [ThuocController::class, 'getTrangChu']);
-
+//Page 
 Route::get('/trangchu', [ThuocController::class, 'getTrangChu']);
 
 Route::get('/lienhe', function () {
