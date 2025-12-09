@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThuocController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
+use App\Http\Controllers\Admin\ThuocController as AdminThuocController;
+use App\Http\Controllers\Admin\LoaiThuocController;
 
 Route::get('/', [ThuocController::class, 'getTrangChu']);
 //Page 
@@ -103,5 +105,19 @@ Route::get('/component/{file}', function ($file) {
     return response()->file($path, [
         'Content-Type' => $contentType,
     ]);
+});
+
+//-----------------------------------------------------------------------------------------------------
+// ADMIN ROUTES
+//-----------------------------------------------------------------------------------------------------
+Route::prefix('dashboard')->name('admin.')->group(function () {
+    // Quản lý loại thuốc
+    Route::resource('loaithuoc', LoaiThuocController::class);
+    Route::post('loaithuoc/quick-add', [LoaiThuocController::class, 'quickAdd'])->name('loaithuoc.quickAdd');
+
+    // Quản lý thuốc
+    Route::resource('thuoc', AdminThuocController::class);
+    Route::patch('thuoc/{id}/restore', [AdminThuocController::class, 'restore'])->name('thuoc.restore');
+    Route::delete('thuoc/{id}/force-delete', [AdminThuocController::class, 'forceDelete'])->name('thuoc.forceDelete');
 });
 

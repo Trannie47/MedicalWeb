@@ -9,7 +9,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Session
+ * Class Sessiongit
  * 
  * @property string $id
  * @property int|null $user_id

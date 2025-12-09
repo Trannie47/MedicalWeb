@@ -39,7 +39,7 @@ class Header extends Component
     private function addCatalogy()
     {
         // Lấy toàn bộ loại thuốc
-        $this->loaithuocs = Loaithuoc::where('isDelete', false)->get();
+        $this->loaithuocs = Loaithuoc::orderBy('maLoai', 'desc')->get();
 
         // Share với toàn bộ view (để dùng trong header.blade.php)
         view()->share('loaithuocs', $this->loaithuocs);

@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class Thuoc
@@ -53,6 +54,7 @@ class Thuoc extends Model
 	];
 
 	protected $fillable = [
+		'maThuoc',
 		'tenThuoc',
 		'QuiCach',
 		'GiaTien',
@@ -78,5 +80,61 @@ class Thuoc extends Model
 	public function chitietdonhangs()
 	{
 		return $this->hasMany(Chitietdonhang::class, 'maThuoc');
+	}
+
+	/**
+	 * Tạo mã thuốc duy nhất (Format: MED + 8 ký tự random alphanumeric)
+	 */
+	public static function generateMaThuoc(): string
+	{
+		do {
+			$maThuoc = 'MED' . strtoupper(Str::random(8));
+		} while (self::where('maThuoc', $maThuoc)->exists());
+
+		return $maThuoc;
+	}
+
+	/**
+	 * Lấy ảnh đại diện (ảnh đầu tiên trong mảng JSON)
+	 */
+	public function getThumbnailImage(): ?string
+	{
+		if (is_array($this->HinhAnh) && !empty($this->HinhAnh)) {
+			return $this->HinhAnh[0];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Scope: Lọc thuốc chưa xóa
+	 */
+	public function scopeActive($query)
+	{
+		return $query->where('isDelete', false);
+	}
+
+	/**
+	 * Scope: Tìm kiếm theo tên thuốc
+	 */
+	public function scopeSearch($query, $keyword)
+	{
+		if ($keyword) {
+			return $query->where('tenThuoc', 'like', '%' . $keyword . '%');
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Scope: Lọc theo loại thuốc
+	 */
+	public function scopeByCategory($query, $maLoai)
+	{
+		if ($maLoai) {
+			return $query->where('maLoai', $maLoai);
+		}
+
+		return $query;
 	}
 }
