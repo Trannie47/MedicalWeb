@@ -10,16 +10,14 @@ Route::get('/', [ThuocController::class, 'getTrangChu']);
 Route::get('/trangchu', [ThuocController::class, 'getTrangChu']);
 
 Route::get('/lienhe', function () {
-    return view('LienHe.index');  
+    return view('LienHe.index');
 });
 
 Route::get('/gioithieu', function () {
-    return view('GioiThieu.index');  
+    return view('GioiThieu.index');
 });
 
-Route::get('/giohang', function () {
-    return view('GioHang.index');  
-});
+Route::get('/giohang', [GioHangController::class, 'ShowCartDetail'])->name('cart.index');
 
 Route::get('/thuoc/{id}', [ThuocController::class, 'show']);
 
@@ -42,8 +40,11 @@ Route::post('/dangnhap', [AuthController::class, 'login'])->name('login.submit')
 Route::post('/dangxuat', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', function () {
-    return view('Dashboard.index');  
+    return view('Dashboard.index');
 });
+
+Route::post('/pay', [GioHangController::class, 'pay'])->name('cart.pay');
+
 
 
 
@@ -92,10 +93,10 @@ Route::get('/component/{file}', function ($file) {
         'js'  => 'application/javascript',
         'png' => 'image/png',
         'jpg' => 'image/jpeg',
-        'jpeg'=> 'image/jpeg',
+        'jpeg' => 'image/jpeg',
         'gif' => 'image/gif',
         'svg' => 'image/svg+xml',
-        'webp'=> 'image/webp',
+        'webp' => 'image/webp',
     ];
 
     $contentType = $mimeTypes[$ext] ?? 'application/octet-stream';
@@ -104,4 +105,3 @@ Route::get('/component/{file}', function ($file) {
         'Content-Type' => $contentType,
     ]);
 });
-

@@ -33,6 +33,8 @@ class Chitietdonhang extends Model
 	];
 
 	protected $fillable = [
+		'maDonHang',
+		'maThuoc',
 		'SoLuong',
 		'SoTien'
 	];
