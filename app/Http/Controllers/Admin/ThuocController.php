@@ -84,6 +84,15 @@ class ThuocController extends Controller
         $validated['maThuoc'] = Thuoc::generateMaThuoc();
         $validated['HinhAnh'] = $images ?: null;
         $validated['CreateAt'] = Carbon::now();
+
+        // Một số cột trong DB không cho phép NULL — đảm bảo có giá trị mặc định
+        $validated['NSX'] = $validated['NSX'] ?? '';
+        $validated['ThanhPhan'] = $validated['ThanhPhan'] ?? '';
+        $validated['CongDung'] = $validated['CongDung'] ?? '';
+        $validated['CachSuDung'] = $validated['CachSuDung'] ?? '';
+        $validated['DanhMuc'] = $validated['DanhMuc'] ?? '';
+        $validated['chiDinhCuaBacSi'] = $validated['chiDinhCuaBacSi'] ?? false;
+        $validated['giaKhuyenMai'] = $validated['giaKhuyenMai'] ?? 0;
         $validated['isDelete'] = false;
 
         Thuoc::create($validated);
@@ -160,6 +169,15 @@ class ThuocController extends Controller
 
             $validated['HinhAnh'] = array_merge($validated['HinhAnh'] ?? [], $newImages);
         }
+
+        // Đảm bảo các trường không null trước khi update
+        $validated['NSX'] = $validated['NSX'] ?? $thuoc->NSX ?? '';
+        $validated['ThanhPhan'] = $validated['ThanhPhan'] ?? $thuoc->ThanhPhan ?? '';
+        $validated['CongDung'] = $validated['CongDung'] ?? $thuoc->CongDung ?? '';
+        $validated['CachSuDung'] = $validated['CachSuDung'] ?? $thuoc->CachSuDung ?? '';
+        $validated['DanhMuc'] = $validated['DanhMuc'] ?? $thuoc->DanhMuc ?? '';
+        $validated['chiDinhCuaBacSi'] = $validated['chiDinhCuaBacSi'] ?? $thuoc->chiDinhCuaBacSi ?? false;
+        $validated['giaKhuyenMai'] = $validated['giaKhuyenMai'] ?? $thuoc->giaKhuyenMai ?? 0;
 
         $thuoc->update($validated);
 
