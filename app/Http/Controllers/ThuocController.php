@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Thuoc;
+use Carbon\Carbon;
 
 class ThuocController extends Controller
 {
@@ -38,12 +39,13 @@ class ThuocController extends Controller
 
     public function getTrangChu()
     {
-        $thuocskhuyenmai = Thuoc::where('isDelete', false)
+        $thuocKhuyenmai = Thuoc::where('isDelete', false)
                 ->whereNotNull('giaKhuyenMai')
                 ->get();
-        $Thu
-        
+        $thuocmoi = Thuoc::where('isDelete', false)
+            ->where('CreateAt', '>=', Carbon::now()->subMonth())
+            ->get();
 
-        return view('LoaiThuoc.index', compact('thuocKhuyenmai'));
+        return view('trangchu.index', compact('thuocKhuyenmai', 'thuocmoi'));
     }
 }
