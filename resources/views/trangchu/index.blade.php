@@ -21,6 +21,7 @@
                         <li class="splide__slide"><img src="{{ asset('asset/img/banner4.png') }}" alt="QC4" /></li>
                         <li class="splide__slide"><img src="{{ asset('asset/img/banner1.png') }}" alt="QC5" /></li>
                         <li class="splide__slide"><img src="{{ asset('asset/img/banner5.png') }}" alt="QC6" /></li>
+                         <li class="splide__slide"><img src="{{ asset('asset/img/banner6.png') }}" alt="QC7" /></li>
                     </ul>
                 </div>
             </div>

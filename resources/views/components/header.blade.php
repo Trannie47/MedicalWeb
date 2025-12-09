@@ -52,7 +52,7 @@
                 <li><a href="#">Tin tức</a></li>
                 <li><a href="{{ url('/lienhe') }}">Liên lạc</a></li>
                 <li><a href="{{ url('/gioithieu') }}">Giới thiệu</a></li>
-                <li><a href="#">Lab Thực Hành</a></li>
+                
             </ul>
         </div>
     </nav>

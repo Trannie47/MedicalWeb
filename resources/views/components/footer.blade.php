@@ -25,8 +25,8 @@
         <div class="footer-section">
             <h3>Liên Hệ</h3>
             <p><strong>CÔNG TY TNHH THƯƠNG MẠI THIỆN TÂM MEDICAL</strong></p>
-            <p>Hotline: <a href="tel: 0909148683"> 0909 148 683</a></p>
-            <p>Email: <a href="mailto:tranghuyen212004@gmail.com">tranghuyen2012004@gmail.com</a></p>
+            <p>Hotline: <a href="tel: 0123456789"> 0123456789</a></p>
+            <p>Email: <a href="mailto:tranghuyen2012004@gmail.com">tranghuyen2012004@gmail.com</a></p>
             <p>Website: <a href="https://www.facebook.com/share/1Cdpg7Ti7E/?mibextid=wwXIfr">THIỆN TÂM MEDICAL</a></p>
         </div>
 
@@ -36,7 +36,8 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p> LƯƠNG THỊ HUYỀN TRANG_D22-TH02_DH52201610_CA2THỨ2</p>
+        <p> LƯƠNG THỊ HUYỀN TRANG D22-TH02 DH52201610 CA1THỨ6</p>
+       <p>Trần Anh Thắng D22_TH13 DH52201440	</p>
     </div>
 </footer>
 
