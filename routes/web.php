@@ -5,13 +5,9 @@ use App\Http\Controllers\ThuocController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
 
-Route::get('/', function () {
-    return view('trangchu.index'); 
-});
-//Page 
-Route::get('/trangchu', function () {
-    return view('trangchu.index');  
-});
+Route::get('/', [ThuocController::class, 'getTrangChu']);
+
+Route::get('/trangchu', [ThuocController::class, 'getTrangChu']);
 
 Route::get('/lienhe', function () {
     return view('LienHe.index');  

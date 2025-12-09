@@ -15,7 +15,6 @@
 
     {{-- Header & Footer CSS --}}
     @php
-        // Chỉ share CSS/JS, không echo HTML
         $header = new \App\View\Components\Header();
         $header->prepare();
         $footer = new \App\View\Components\Footer();
@@ -27,16 +26,52 @@
 
     {{-- CSS riêng từng trang --}}
     @stack('styles')
+
+    {{-- FLASH MESSAGE CSS --}}
+    <style>
+        .alert {
+            padding: 12px 20px;
+            border-radius: 6px;
+            position: fixed;
+            top: 80px; 
+            right: 20px;
+            z-index: 9999;
+            color: #fff;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .alert-success { background: #28a745; }
+        .alert-error { background: #dc3545; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
+
 <body>
 
-    {{-- Header component HTML --}}
-    {!! $header->html() !!}   {{-- chỉ render HTML mà không inject thêm CSS/JS --}}
+    {{-- Header component --}}
+    {!! $header->html() !!}
+
+    {{-- FLASH MESSAGE - Đặt ngay dưới header --}}
+    @if (session('success'))
+        <div class="alert alert-success" id="alert-box">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-error" id="alert-box">
+            {{ session('error') }}
+        </div>
+    @endif
 
     {{-- Nội dung từng trang --}}
     @yield('content')
 
-    {{-- Footer component HTML --}}
+    {{-- Footer component --}}
     {!! $footer->html() !!}
 
     <!-- Splide JS -->
@@ -50,5 +85,18 @@
 
     {{-- JS riêng từng trang --}}
     @stack('scripts')
+
+    {{-- Flash message auto-hide --}}
+    <script>
+        setTimeout(() => {
+            const alert = document.getElementById('alert-box');
+            if (alert) {
+                alert.style.transition = '0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 3000);
+    </script>
+
 </body>
 </html>
