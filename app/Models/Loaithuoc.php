@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $maLoai
  * @property string $TenLoai
  * @property string $GhiChu
- * @property bool $isDelete
  * 
  * @property Collection|Thuoc[] $thuocs
  *
@@ -27,18 +26,15 @@ class Loaithuoc extends Model
 	protected $primaryKey = 'maLoai';
 	public $timestamps = false;
 
-	protected $casts = [
-		'isDelete' => 'bool'
-	];
-
 	protected $fillable = [
 		'TenLoai',
-		'GhiChu',
-		'isDelete'
+		'GhiChu'
 	];
 
 	public function thuocs()
 	{
 		return $this->hasMany(Thuoc::class, 'maLoai');
 	}
+
+	
 }

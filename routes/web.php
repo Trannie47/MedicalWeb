@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ThuocController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GioHangController;
+use App\Http\Controllers\Admin\ThuocController as AdminThuocController;
+use App\Http\Controllers\Admin\LoaiThuocController;
 
 Route::get('/', [ThuocController::class, 'getTrangChu']);
 //Page 
@@ -21,9 +24,10 @@ Route::get('/giohang', function () {
     return view('GioHang.index');  
 });
 
-Route::get('/thuoc/{id}', [ThuocController::class, 'show']);
+Route::get('/thuoc/{id}', [ThuocController::class, 'show'])->name('chi-tiet-san-pham');
 
 Route::post('/cart/add/{id}', [GioHangController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/add/{id}', [GioHangController::class, 'addToCart'])->name('gio-hang-add');
 
 Route::post('/cart/update/{id}', [GioHangController::class, 'updateCart'])->name('cart.update');
 
@@ -103,5 +107,19 @@ Route::get('/component/{file}', function ($file) {
     return response()->file($path, [
         'Content-Type' => $contentType,
     ]);
+});
+
+//-----------------------------------------------------------------------------------------------------
+// ADMIN ROUTES
+//-----------------------------------------------------------------------------------------------------
+Route::prefix('dashboard')->name('admin.')->group(function () {
+    // Quản lý loại thuốc
+    Route::resource('loaithuoc', LoaiThuocController::class);
+    Route::post('loaithuoc/quick-add', [LoaiThuocController::class, 'quickAdd'])->name('loaithuoc.quickAdd');
+
+    // Quản lý thuốc
+    Route::resource('thuoc', AdminThuocController::class);
+    Route::patch('thuoc/{id}/restore', [AdminThuocController::class, 'restore'])->name('thuoc.restore');
+    Route::delete('thuoc/{id}/force-delete', [AdminThuocController::class, 'forceDelete'])->name('thuoc.forceDelete');
 });
 

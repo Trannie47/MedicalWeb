@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Thuốc</title>
 
     <!-- Chỉ Bootstrap 5 + Font Awesome -->
@@ -35,11 +36,9 @@
                 </button>
                 <div class="collapse" id="collapseThuoc">
                     <div class="bg-white text-dark rounded ms-4 me-3">
-                        <a class="dropdown-item py-2" href="#">Danh sách thuốc</a>
-                        <a class="dropdown-item py-2" href="#">Thêm thuốc</a>
-                        <a class="dropdown-item py-2" href="#">Loại thuốc</a>
-                        <a class="dropdown-item py-2" href="#">Nhà cung cấp</a>
-                        <a class="dropdown-item py-2" href="#">Kho – tồn kho</a>
+                        <a class="dropdown-item py-2" href="{{ route('admin.thuoc.index') }}">Danh sách thuốc</a>
+                        <a class="dropdown-item py-2" href="{{ route('admin.thuoc.create') }}">Thêm thuốc</a>
+                        <a class="dropdown-item py-2" href="{{ route('admin.loaithuoc.index') }}">Loại thuốc</a>
                     </div>
                 </div>
 
