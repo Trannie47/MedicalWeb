@@ -72,7 +72,7 @@
 
         <!-- RIGHT: Order Summary -->
         <div class="order-summary">
-            <h2>Thông tin đơn hàng</h2>
+            <h2>Thông tin đơn hàng1</h2>
             <div class="total">
                 <span>Tổng tiền:</span>
                 <strong>{{ formatPrice(array_sum(array_map(fn($item) => $item['gia'] * $item['soLuong'], $cart))) }}</strong>
