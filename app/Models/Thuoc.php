@@ -29,7 +29,6 @@ use Illuminate\Support\Str;
  * @property bool $chiDinhCuaBacSi
  * @property float $giaKhuyenMai
  * @property Carbon $CreateAt
- * @property bool $isDelete
  * 
  * @property Loaithuoc $loaithuoc
  * @property Collection|Chitietdonhang[] $chitietdonhangs
@@ -49,8 +48,7 @@ class Thuoc extends Model
 		'maLoai' => 'int',
 		'chiDinhCuaBacSi' => 'bool',
 		'giaKhuyenMai' => 'float',
-		'CreateAt' => 'datetime',
-		'isDelete' => 'bool'
+		'CreateAt' => 'datetime'
 	];
 
 	protected $fillable = [
@@ -68,8 +66,7 @@ class Thuoc extends Model
 		'maLoai',
 		'chiDinhCuaBacSi',
 		'giaKhuyenMai',
-		'CreateAt',
-		'isDelete'
+		'CreateAt'
 	];
 
 	public function loaithuoc()
@@ -109,10 +106,7 @@ class Thuoc extends Model
 	/**
 	 * Scope: Lọc thuốc chưa xóa
 	 */
-	public function scopeActive($query)
-	{
-		return $query->where('isDelete', false);
-	}
+	// no isDelete soft-delete scope anymore
 
 	/**
 	 * Scope: Tìm kiếm theo tên thuốc

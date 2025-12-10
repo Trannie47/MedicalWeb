@@ -51,7 +51,7 @@
                     {{-- Thông tin bổ sung --}}
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i> 
-                        Có <strong>{{ $loaithuoc->thuocs()->active()->count() }}</strong> thuốc thuộc loại này
+                        Có <strong>{{ $loaithuoc->thuocs()->count() }}</strong> thuốc thuộc loại này
                     </div>
                 </div>
 

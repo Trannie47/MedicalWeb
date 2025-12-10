@@ -21,7 +21,7 @@ class ThuocController extends Controller
         $loai = $request->input('loai');
         $perPage = 10;
 
-        $query = Thuoc::active()->with('loaithuoc');
+        $query = Thuoc::with('loaithuoc');
 
         if ($keyword) {
             $query->search($keyword);
@@ -93,8 +93,6 @@ class ThuocController extends Controller
         $validated['DanhMuc'] = $validated['DanhMuc'] ?? '';
         $validated['chiDinhCuaBacSi'] = $validated['chiDinhCuaBacSi'] ?? false;
         $validated['giaKhuyenMai'] = $validated['giaKhuyenMai'] ?? 0;
-        $validated['isDelete'] = false;
-
         Thuoc::create($validated);
 
         return redirect()->route('admin.thuoc.index')->with('success', 'Thêm thuốc thành công!');
@@ -190,30 +188,8 @@ class ThuocController extends Controller
     public function destroy($id)
     {
         $thuoc = Thuoc::findOrFail($id);
-        $thuoc->update(['isDelete' => true]);
 
-        return redirect()->route('admin.thuoc.index')->with('success', 'Xóa thuốc thành công!');
-    }
-
-    /**
-     * Khôi phục thuốc đã xóa
-     */
-    public function restore($id)
-    {
-        $thuoc = Thuoc::findOrFail($id);
-        $thuoc->update(['isDelete' => false]);
-
-        return redirect()->route('admin.thuoc.index')->with('success', 'Khôi phục thuốc thành công!');
-    }
-
-    /**
-     * Xóa vĩnh viễn (Hard delete)
-     */
-    public function forceDelete($id)
-    {
-        $thuoc = Thuoc::findOrFail($id);
-
-        // Xóa ảnh từ storage
+        // Xóa ảnh từ storage nếu có
         if ($thuoc->HinhAnh) {
             foreach ($thuoc->HinhAnh as $imageUrl) {
                 if (strpos($imageUrl, 'storage/') !== false) {
@@ -225,6 +201,24 @@ class ThuocController extends Controller
 
         $thuoc->delete();
 
-        return redirect()->route('admin.thuoc.index')->with('success', 'Xóa vĩnh viễn thuốc thành công!');
+        return redirect()->route('admin.thuoc.index')->with('success', 'Xóa thuốc thành công!');
+    }
+
+    /**
+     * Khôi phục thuốc đã xóa
+     */
+    public function restore($id)
+    {
+        // restore no longer applicable — keep for compatibility or remove routes
+        return redirect()->route('admin.thuoc.index')->with('info', 'Chức năng khôi phục không khả dụng.');
+    }
+
+    /**
+     * Xóa vĩnh viễn (Hard delete)
+     */
+    public function forceDelete($id)
+    {
+        // forceDelete falls back to normal delete now
+        return $this->destroy($id);
     }
 }

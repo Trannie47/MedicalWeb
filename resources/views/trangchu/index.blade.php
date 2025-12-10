@@ -4,106 +4,182 @@
 @section('title', 'Trang Chủ')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/trangchu') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ url('/css/trangchu?v=' . time()) }}">
 @endpush
 
 @section('content')
+    @php
+        use Illuminate\Support\Str;
+    @endphp
 
     <div id="body-container">
         <!-- Quảng cáo -->
-        <div class="advertisement">
-            <div class="splide large-ad">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner.png') }}" alt="QC1" /></li>
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner2.png') }}" alt="QC2" /></li>
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner3.png') }}" alt="QC3" /></li>
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner4.png') }}" alt="QC4" /></li>
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner1.png') }}" alt="QC5" /></li>
-                        <li class="splide__slide"><img src="{{ asset('asset/img/banner5.png') }}" alt="QC6" /></li>
-                         <li class="splide__slide"><img src="{{ asset('asset/img/banner6.png') }}" alt="QC7" /></li>
-                    </ul>
+        <div class="advertisement-wrapper" align="center">
+            <div class="container-fluid px-0">
+                <div class="row g-0 align-items-stretch">
+                    <div class="col-lg-9 mx-auto">
+                        <div class="splide large-ad">
+                            <div class="splide__track">
+                                <ul class="splide__list">
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner.png') }}" alt="QC1" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner2.png') }}" alt="QC2" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner3.png') }}" alt="QC3" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner4.png') }}" alt="QC4" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner1.png') }}" alt="QC5" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner5.png') }}" alt="QC6" /></li>
+                                    <li class="splide__slide"><img src="{{ asset('asset/img/banner6.png') }}" alt="QC7" /></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="small-ads">
-                <img src="{{ asset('asset/img/qc1.png') }}" alt="QC nhỏ 1" />
-                <img src="{{ asset('asset/img/qc2.png') }}" alt="QC nhỏ 2" />
-            </div>
         </div>
-
         <!-- Sản phẩm -->
-        <section class="products">
-            <h2>Sản phẩm Khuyến Mãi</h2>
-            <div class="product-list">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('asset/img/sp1.png') }}" alt="Chỉ nha khoa Oral-B">
-                    <h3>Chỉ nha khoa Oral-B</h3>
-                    <p class="old-price">65.000 đ</p>
-                    <p class="price">52.000 đ/Hộp</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
+        <section class="products py-5">
+            <div class="container-fluid px-3 px-md-5">
+                <!-- Sản phẩm Khuyến Mãi -->
+                <h2 class="mb-4 fw-bold text-dark">
+                    <i class="fas fa-tag text-danger"></i> Sản phẩm Khuyến Mãi
+                </h2>
+                
+                @if ($thuocKhuyenmai && $thuocKhuyenmai->count() > 0)
+                <div class="row g-4 mb-5">
+                    @foreach ($thuocKhuyenmai as $thuoc)
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card h-100" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+                            <div class="position-relative overflow-hidden" style="height: 220px; background: #f8f9fa;">
+                                @if ($thuoc->getThumbnailImage())
+                                <img src="{{ $thuoc->getThumbnailImage() }}" 
+                                     alt="{{ $thuoc->tenThuoc }}"
+                                     style="object-fit: cover; height: 100%; width: 100%; transition: transform 0.3s;">
+                                @else
+                                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #6c757d;">
+                                    <i class="fas fa-image fa-3x"></i>
+                                </div>
+                                @endif
+                                @if ($thuoc->giaKhuyenMai && $thuoc->giaKhuyenMai < $thuoc->GiaTien)
+                                <span style="position: absolute; top: 8px; left: 8px; background: #dc3545; color: white; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 12px;">
+                                    -{{ round((1 - $thuoc->giaKhuyenMai / $thuoc->GiaTien) * 100) }}%
+                                </span>
+                                @endif
+                            </div>
+                            <div style="padding: 16px; display: flex; flex-direction: column; flex-grow: 1;">
+                                <h6 style="margin: 0 0 8px 0; font-weight: bold; color: #343a40; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px;">
+                                    {{ Str::limit($thuoc->tenThuoc, 35) }}
+                                </h6>
+                                <small style="color: #6c757d; margin: 4px 0;">
+                                    <i class="fas fa-folder"></i> {{ $thuoc->loaithuoc->TenLoai ?? 'Chưa phân loại' }}
+                                </small>
+                                <small style="color: #6c757d; margin: 4px 0;">
+                                    <i class="fas fa-cube"></i> {{ $thuoc->QuiCach }} / {{ $thuoc->DVTinh }}
+                                </small>
+                                <div style="margin-top: auto; padding-top: 12px;">
+                                    @if ($thuoc->giaKhuyenMai && $thuoc->giaKhuyenMai > 0)
+                                    <small style="color: #6c757d; text-decoration: line-through; display: block;">
+                                        {{ number_format($thuoc->GiaTien, 0, ',', '.') }}đ
+                                    </small>
+                                    <h6 style="color: #dc3545; font-weight: bold; margin: 4px 0;">
+                                        {{ number_format($thuoc->giaKhuyenMai, 0, ',', '.') }}đ
+                                    </h6>
+                                    @else
+                                    <h6 style="color: #28a745; font-weight: bold; margin: 0;">
+                                        {{ number_format($thuoc->GiaTien, 0, ',', '.') }}đ
+                                    </h6>
+                                    @endif
+                                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                        <a href="{{ route('chi-tiet-san-pham', $thuoc->maThuoc) }}" 
+                                           class="btn btn-sm btn-primary flex-grow-1" style="font-size: 12px;">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('gio-hang-add', $thuoc->maThuoc) }}" 
+                                           class="btn btn-sm btn-success flex-grow-1" style="font-size: 12px;">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <div class="alert alert-info text-center mb-5">
+                    <i class="fas fa-box-open fa-2x mb-3"></i>
+                    <p class="mb-0">Hiện không có sản phẩm khuyến mãi nào.</p>
+                </div>
+                @endif
 
-                <a class="product-item" href="#">
-                    <img src="{{ asset('asset/img/baby.png') }}" alt="Ferrolip">
-                    <h3>Ferrolip</h3>
-                    <p class="old-price">75.000 đ</p>
-                    <p class="price">32.000 đ/Hộp</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-
-                <a class="product-item" href="#">
-                    <img src="{{ asset('asset/img/sp2.png') }}" alt="Postinor">
-                    <h3>Thuốc Postinor</h3>
-                    <p class="old-price"></p>
-                    <p class="price">37.000 đ/Hộp</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-
-                {{--<a class="product-item" href="{{ route('chi-tiet-san-pham', 'smecta') }}">
-                    <img src="{{ asset('asset/img/sp3.png') }}" alt="Smecta">
-                    <h3>Smecta</h3>
-                    <p class="old-price">142.000 đ</p>
-                    <p class="price">100.000 đ/Hộp</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-
-                <a class="product-item" href="{{ route('chi-tiet-san-pham', 'benadine') }}">
-                    <img src="{{ asset('asset/img/sp4.png') }}" alt="Benadine">
-                    <h3>Sát Khuẩn Benadine</h3>
-                    <p class="old-price">65.000 đ</p>
-                    <p class="price">52.000 đ/Chai</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-
-                <a class="product-item" href="{{ route('chi-tiet-san-pham', 'fabspar') }}">
-                    <img src="{{ asset('asset/img/sp5.png') }}" alt="FABSPAR">
-                    <h3>Thuốc FABSPAR</h3>
-                    <p class="old-price"></p>
-                    <p class="price">315.000 đ/lọ</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-
-                <a class="product-item" href="{{ route('chi-tiet-san-pham', 'nolpaza') }}">
-                    <img src="{{ asset('asset/img/sp6.png') }}" alt="NOLPAZA">
-                    <h3>Dạ dày NOLPAZA</h3>
-                    <p class="old-price"></p>
-                    <p class="price">Tư vấn với dược sỹ</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a> --}}
+                <!-- Sản phẩm mới -->
+                <h2 class="mb-4 fw-bold text-dark">
+                    <i class="fas fa-star text-warning"></i> Sản phẩm mới
+                </h2>
+                
+                @if ($thuocmoi && $thuocmoi->count() > 0)
+                <div class="row g-4">
+                    @foreach ($thuocmoi as $thuoc)
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card h-100" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+                            <div class="position-relative overflow-hidden" style="height: 220px; background: #f8f9fa;">
+                                @if ($thuoc->getThumbnailImage())
+                                <img src="{{ $thuoc->getThumbnailImage() }}" 
+                                     alt="{{ $thuoc->tenThuoc }}"
+                                     style="object-fit: cover; height: 100%; width: 100%; transition: transform 0.3s;">
+                                @else
+                                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #6c757d;">
+                                    <i class="fas fa-image fa-3x"></i>
+                                </div>
+                                @endif
+                                <span style="position: absolute; top: 8px; left: 8px; background: #17a2b8; color: white; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 12px;">
+                                    <i class="fas fa-fire-alt"></i> Mới
+                                </span>
+                            </div>
+                            <div style="padding: 16px; display: flex; flex-direction: column; flex-grow: 1;">
+                                <h6 style="margin: 0 0 8px 0; font-weight: bold; color: #343a40; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px;">
+                                    {{ Str::limit($thuoc->tenThuoc, 35) }}
+                                </h6>
+                                <small style="color: #6c757d; margin: 4px 0;">
+                                    <i class="fas fa-folder"></i> {{ $thuoc->loaithuoc->TenLoai ?? 'Chưa phân loại' }}
+                                </small>
+                                <small style="color: #6c757d; margin: 4px 0;">
+                                    <i class="fas fa-cube"></i> {{ $thuoc->QuiCach }} / {{ $thuoc->DVTinh }}
+                                </small>
+                                <div style="margin-top: auto; padding-top: 12px;">
+                                    @if ($thuoc->giaKhuyenMai && $thuoc->giaKhuyenMai > 0)
+                                    <small style="color: #6c757d; text-decoration: line-through; display: block;">
+                                        {{ number_format($thuoc->GiaTien, 0, ',', '.') }}đ
+                                    </small>
+                                    <h6 style="color: #dc3545; font-weight: bold; margin: 4px 0;">
+                                        {{ number_format($thuoc->giaKhuyenMai, 0, ',', '.') }}đ
+                                    </h6>
+                                    @else
+                                    <h6 style="color: #28a745; font-weight: bold; margin: 0;">
+                                        {{ number_format($thuoc->GiaTien, 0, ',', '.') }}đ
+                                    </h6>
+                                    @endif
+                                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                        <a href="{{ route('chi-tiet-san-pham', $thuoc->maThuoc) }}" 
+                                           class="btn btn-sm btn-primary flex-grow-1" style="font-size: 12px;">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('gio-hang-add', $thuoc->maThuoc) }}" 
+                                           class="btn btn-sm btn-success flex-grow-1" style="font-size: 12px;">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-box-open fa-2x mb-3"></i>
+                    <p class="mb-0">Hiện không có sản phẩm mới nào.</p>
+                </div>
+                @endif
             </div>
-
-            <!-- Sản phẩm mới -->
-            <h2>Sản phẩm mới</h2>
-            <div class="product-list">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('asset/img/spm1.png') }}" alt="Salonpas">
-                    <h3>Salonpas</h3>
-                    <p class="old-price">16.000 đ</p>
-                    <p class="price">12.000 đ/Gói</p>
-                    <button class="btn-item"><p>Chọn sản phẩm</p></button>
-                </a>
-            </div> 
         </section>
 
         <!-- Tin tức -->

@@ -142,9 +142,9 @@
                     <div class="card-body">
                         {{-- Nhà sản xuất --}}
                         <div class="mb-3">
-                            <label class="form-label">Nhà Sản Xuất</label>
+                            <label class="form-label fw-bold">Nhà Sản Xuất <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('NSX') is-invalid @enderror" 
-                                name="NSX" value="{{ old('NSX', $thuoc->NSX) }}">
+                                name="NSX" value="{{ old('NSX', $thuoc->NSX) }}" required>
                             @error('NSX')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror

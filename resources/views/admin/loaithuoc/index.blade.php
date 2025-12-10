@@ -51,7 +51,7 @@
                                     </td>
                                     <td>{{ $loaithuoc->GhiChu ?? 'N/A' }}</td>
                                     <td class="text-center">
-                                        <span class="badge bg-info">{{ $loaithuoc->thuocs()->active()->count() }}</span>
+                                        <span class="badge bg-info">{{ $loaithuoc->thuocs()->count() }}</span>
                                     </td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.loaithuoc.edit', $loaithuoc->maLoai) }}" 
