@@ -8,6 +8,9 @@
 @endpush
 
 @section('content')
+@php
+use Illuminate\Support\Str;
+@endphp
 
 <div id="body-container">
     <!-- Quảng cáo -->
@@ -70,7 +73,7 @@
         <div class="product-list">
 
             @foreach ($thuocmoi as $item)
-             @php
+            @php
             $firstImage = is_array($item->HinhAnh) ? ($item->HinhAnh[0] ?? 'logo.png') : 'logo.png';
             @endphp
             <a class="product-item" href="{{ url('/thuoc/' .$item->maThuoc ) }}">

@@ -11,11 +11,11 @@ class ThuocController extends Controller
 {
     public function show($id)
     {
-        $thuoc = Thuoc::join('Loaithuoc', 'thuoc.maLoai', '=', 'Loaithuoc.maLoai')
-            ->select('thuoc.*', 'Loaithuoc.tenLoai') // lấy thêm tên loại
-            ->where('thuoc.isDelete', false)
-            ->where('thuoc.maThuoc', $id)
-            ->firstOrFail();
+       $thuoc = Thuoc::join('Loaithuoc', 'thuoc.maLoai', '=', 'Loaithuoc.maLoai')
+              ->select('thuoc.*', 'Loaithuoc.tenLoai') // lấy thêm tên loại
+              ->where('thuoc.isDelete', false)
+              ->where('thuoc.maThuoc', $id)
+              ->firstOrFail();
 
         if (!$thuoc) {
             abort(404, 'Thuốc không tồn tại');
@@ -26,8 +26,8 @@ class ThuocController extends Controller
 
     public function getByLoai($id)
     {
-        $thuocs = Thuoc::where('isDelete', false)
-            ->where('maLoai', $id)
+        $thuocs = Thuoc::where('maLoai', $id)
+            ->where('isDelete', false)
             ->get();
 
         if (!$thuocs) {
@@ -39,11 +39,19 @@ class ThuocController extends Controller
 
     public function getTrangChu()
     {
-        $thuocKhuyenmai = Thuoc::where('isDelete', false)
-            ->whereNotNull('giaKhuyenMai')
+        // Sản phẩm khuyến mãi: có giaKhuyenMai và nhỏ hơn giá gốc
+        $thuocKhuyenmai = Thuoc::whereNotNull('giaKhuyenMai')
+            ->where('giaKhuyenMai', '>', 0)
+            ->where('thuoc.isDelete', false)
+            ->whereRaw('giaKhuyenMai < GiaTien')
+            ->orderBy('giaKhuyenMai', 'desc')
+            ->limit(20)
             ->get();
-        $thuocmoi = Thuoc::where('isDelete', false)
-            ->where('CreateAt', '>=', Carbon::now()->subMonth())
+
+        // Sản phẩm mới: tạo trong 30 ngày gần đây
+        $thuocmoi = Thuoc::where('CreateAt', '>=', Carbon::now()->subDays(30))
+            ->orderBy('CreateAt', 'desc')
+            ->limit(20)
             ->get();
 
         return view('trangchu.index', compact('thuocKhuyenmai', 'thuocmoi'));
