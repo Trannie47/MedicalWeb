@@ -8,9 +8,6 @@
 @endpush
 
 @section('content')
-@php
-use Illuminate\Support\Str;
-@endphp
 
 <div id="body-container">
     <!-- Quảng cáo -->
